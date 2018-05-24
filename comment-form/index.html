@@ -1,0 +1,109 @@
+<!DOCTYPE>
+<head>
+  <meta charset="utf-8">
+  <title>comment form</title>
+  <style>
+h1, h2, h3, h4, h5, h6, p {
+  /* 그냥 넣었음 */
+  padding: 0;
+  margin: 0;
+}
+form {
+  width: 500px;
+  border: 1px solid;
+}
+textarea {
+  width: 100%;
+  min-height: 150px;
+}
+.button-wrapper {
+  /* 하나는 왼편 두 개는 오른편에 있도록 하기 위한 작업 */
+  display:  flex;
+  /* 하나만 오른편에 있도록 하려면 */
+  /* flex-direction: row-reverse; */
+  /* 같은 걸 해도 되고... */
+}
+button {
+  width: 80px;
+  height: 30px;
+  box-sizing: border-box;
+  border: none;
+  background: pink;
+  color: white
+}
+
+.comment-list {
+  /* ul reset */
+  margin: 0;
+  padding: 0;
+}
+/* 댓글 꾸미기 */
+.comment {
+  list-style: none;
+  padding: 10px 0;
+}
+.comment img {
+  float: left;
+  margin-right: 16px;
+}
+.comment span {
+  float: left;
+  margin-right: 5px;
+}
+.comment p {
+  clear: both;
+  margin-top: 5px;
+}
+  </style>
+</head>
+<body>
+  <section class="comment-section">
+    <form>
+      <textarea></textarea>
+      <!-- 하나는 왼편, 두 개는 오른편에 있도록 해보겠습니다. -->
+      <div class="button-wrapper">
+        <button type="button">왼쪽버튼</button>
+        <!-- button type이라 submit이 일어나지 않습니다. -->
+        <div style="flex: 1"></div>
+        <!-- flex가 지정된 다른 애들과 그 비율로 남은 width를 나눠먹어야 하는데
+            flex 가 혼자 지정됐으므로 남은 공간을 전부 차지합니다. -->
+        <button type="reset">지우기</button>
+        <!-- reset type도 있더군요 -->
+        <button class="write-button">작성하기</button>
+        <!-- <input type="submit value="작성하기 /> 도 가능할 겁니다. -->
+      </div>
+    </form>
+    <ul class="comment-list">
+      <li class="comment">
+        <img width="40xp" height=40px" src="https://www.buira.org/assets/images/shared/default-profile.png">
+        <span>작성자</span>
+        <time>2019-09-06</time>
+        <p>댓글 내용</p>
+      </li>
+    </ul>
+  </section>
+  <script>
+/* jQuery 찾기 귀찮으니까 Vanilla로 하겠습니다. */
+document.querySelector('form').onsubmit = function (event) {
+  event.preventDefault();
+  /* 이게 개인적으로 좋은 것 같아요 */
+  var content = document.querySelector('textarea').value;
+  document.querySelector('.comment-list').innerHTML += commentTemplate(content);
+  /* 정답처럼 찾고 넣음 */
+};
+
+function commentTemplate(content) {
+  // TODO escape html
+  return `
+<li class="comment">
+  <img width="40xp" height=40px" src="https://www.buira.org/assets/images/shared/default-profile.png">
+  <span>작성자</span>
+  <time>2019-09-06</time>
+  <p>${content}</p>
+</li>
+  `;
+  /* ES6의 Template literals 를 사용하여 쉽게 만듬 */
+  /* 날짜는 저기서 계산하면 되겠죠? */
+}
+  </script>
+</body>
